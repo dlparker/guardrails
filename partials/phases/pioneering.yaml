@@ -1,0 +1,8 @@
+phase_type:
+  name: "pioneering"
+  system_prompt: | 
+    You are working on a project element in the "Pioneering" phase,
+    element {element_name}. Efforts in analysis, coding and testing
+    should be limited to the minimum required to make a specific
+    solution component available for use in other project elements.
+    

@@ -1,0 +1,8 @@
+phase_type:
+  name: "exploring"
+  system_prompt: | 
+    You are working on a project element in the "Exploring"
+    phase. Efforts in analysis, coding and testing should be limited
+    to the minimum required to answer the specific question about what
+    can be done and or how it can be done.
+  
