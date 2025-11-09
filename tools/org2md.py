@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+from pathlib import Path
+from subprocess import Popen
+
+top = Path(__file__).parent.parent
+dirs = [
+    top / "partials" / "modes",
+    top / "partials" / "phases",
+    top / "partials" / "roles",
+    top / "manual" / "stories",
+]
+for tdir in dirs:
+    for sfile in tdir.glob("*.org"):
+        command = [ 'pandoc', '--wrap=none',
+                    '-s', '-f', 'org', '-t', 'markdown+yaml_metadata_block', sfile, '-o', f"{sfile.with_suffix('.md')}"]
+        print(command)
+        p = Popen(command)
+        print(p.communicate())
+        
