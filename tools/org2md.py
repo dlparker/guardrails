@@ -4,6 +4,7 @@ from subprocess import Popen
 
 top = Path(__file__).parent.parent
 dirs = [
+    top / "partials" / "general",
     top / "partials" / "modes",
     top / "partials" / "phases",
     top / "partials" / "roles",

@@ -1,0 +1,105 @@
+* Guardrails Development Process
+
+This process is designed to apply a specific development style to agentic assisted coding
+
+** Development Process Theory
+
+This process is focused on two things, interation style and design analysis through experiment.
+
+Rober Persig's Metaphysics of Quality (MOQ) describes evolution as a
+rhythmic alternation between Dynamic Quality (DQ), the unpredictable
+force of innovation that disrupts and creates new possibilities, and
+Static Quality (SQ), the latching mechanism that preserves valuable
+patterns once proven.
+
+This process seeks to emulate this, as it tracks well with the
+author\'s experience in producing quality software at relatively high
+speed.
+
+- DQ Phase: Invest minimally in a small, experimental change to probe the problem or solution space.
+- SQ Phase: Immediately test, evaluate, and either latch (retain) the change if it adds value or discard it without cost.
+
+So, these prinicples should guide the work:
+
+1. Recognize the core of the needed change, and strictly limit the work to that core.
+2. At all times, avoid premature insertation of the code features
+   associated with production quality, wait those to be a explicit
+   goal.
+3. When latching in progress, ensure that only the confirmed value is locked down, preserve
+   flexibility for more innovation.
+   
+
+* Process Taxonomies
+
+** Phase Definitions
+
+Each process step, typically a story and its component tasks will be designated to
+be part of a "phase", which declares the work to have a completion goal that is
+a specific level of maturity, such as prototype, alpha quality, production, etc.
+Any process actor should regulate the level and type of efforts applied to that
+goal accordingly. Agentic Assistants should be particularly careful not to introduce
+elements that properly belong to later phases, so as to avoid premature investment
+in a potentially ephemeral work product.
+
+Note that phase assignment is not usually at the whole project level. There are
+often sets of components, functionaly or features that are at different phase
+levels at the same time.
+
+
+| *Phase*        | *Typical Story Types*                  | Goal                                                         |
+| -------------- | -------------------------------------- | ------                                                       |
+| *Exploring*    | Study, POC                             | Selection of solution approaches for key features            |
+| *Pioneering*   | Framing, Glueing                       | Only enough code and test to validate the solution approach  |
+| *Settling*     | Anchoring, Joining, User               | Enough working code to support development of other features |
+| *Fortifying*   | Compliance, Joining, Anchoring         | Preparing feature for releasble status                       |
+| *Re-Founding*  | Compliance, Joining, Anchoring, User   | Adding or changing support for new features                  |
+
+
+** Story Definitions
+Stories will be created and maintained in written form and will service as the primary
+increment of process progress. Almost all stories will be implemented as a series of tasks,
+unless the story reduces simply to a single task. Proof of Concept stories might be like that.
+
+This list is mostly complete, any additional story type should probably be added to the
+process definition, not just for the target project.
+
+| *Story Type*   | *Focus*                                                                     | 
+| **Study**      | Answering questions about problem space and possible solution options       | 
+| **POC**        | enough code to demo key solutions, very short term                          | 
+| **Framing**    | Establish early component boundaries, mostly short term                     | 
+| **Glueing**    | Scaffoling interagration to support early components                        | 
+| **Anchoring**  | Improving components to solidify APIs and primary logic to production level | 
+| **Joining**    | Improving integrations                                                      | 
+| **User**       | User interactions                                                           | 
+| **Compliance** | Meeting standards for code coverage, documentation, UI style guide,         | 
+
+
+** Task Definitions
+
+This list is probably not complete, a given project may need additional types specific to that project.
+
+| *Task Type*    | *Story Type*                   |                                                                            |
+| *Spike Code*   | Study                          | Code to test ideas about detailed nature of problem or possible solution   |
+| *Spike Report* | Study                          | Research notes ideas about detailed nature of problem or possible solution |
+| *POC*          | POC                            | Simple functions and classes allowing termorary tests or demo developemnt  |
+| *Component*    | All except Study and POC       | Encapsulating a peice of the solution in a function or class               |
+| *Scaffold*     | POC, Framing, Glueing          | Code to tie components together for preliminary tests and demos            |
+| *Demo Test*    | POC, Framing, Glueing          | Test code designed to aid evaluation and debug of incomplete features      |
+| *Test*         | Anchoring, Joining, Compliance | Test code intended for long term retention, follow "no mocking" rule       |
+| *Covert Test*  | Anchoring, Joining, Compliance | Test code targeted at coverage gaps, follow "mostly no mocking" rule       |
+
+
+Rules:
+
+1. No Mocking test rule
+   1. Tests don't just test code, they test intention behind the code
+   2. Should use test data and simulated operation flow to setup test conditions, not mocks
+   3. Hard to test code should be considered possible target for redesign.
+   4. No use of mocks unless to capture external services
+2. Mostly No Mocking test rule
+   1. Typically applied to last few percent of missing coverage
+   2. Typically only applies to error handling code
+   3. Using mocking allowed but only if the cost of applying the No Mocking rule is too high.
+
+      
+

@@ -35,8 +35,12 @@ For more discussion, see foundation_concept.md
 |  **Story Type Name** | **Focus** | **Typical task types** |
 |-------|----------------|----------------|
 | **Study** |  Answering questions about problem space and possible solution options | Spikes |
-| **Pathfinder** |  Protoyping components and their interactions | fast, cheap component experiements, simple hardwire integrations |
-| **Forming** |  Converting protoype components into preliminary permanent forms and integrations | data and process component design, code and test |
+| **POC** | enough code to demo key solutions, very short term | POC functions, classes | 
+| **Framing** | Establish early component boundaries, mostly short term | Simple functions and classes, very basic tests |
+ |
+| **Glueing** | Scaffoling interagration to support early components | lots of hardcoding, much of it in temporary tests |
+| **Anchoring** | Improving components to solidify APIs and primary logic to production level | Survivable APIs, well factored classes, data definitions, heavy testing through integration tests |
+| **Joining** | Improving integrations | Integration layer components, Heavy testing with zero or minimal mocking, Early docs, especially docstrings |
 | **User** | User interactions | ui component design, code and test |
 | **Compliance** | Meeting standards for code coverage, documentation, UI style guide, support for configuration, monitoring, error reporting, etc. | Almost any type |
 
