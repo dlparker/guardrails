@@ -1,0 +1,28 @@
+[project]
+name = "guardrails"
+version = "0.1.0"
+description = "Toolset for an iterative, constraint rich, context minimizing process for agentic coding"
+readme = "README.md"
+authors = [
+    { name = "Dennis Parker", email = "dennis@windhavengroup.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "sqlalchemy-repr>=0.1.0",
+    "sqlmodel>=0.0.11",
+    "textual>=6.5.0",
+]
+
+[project.scripts]
+ctrack = "tools:main"
+
+[build-system]
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipdb>=0.13.13",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]

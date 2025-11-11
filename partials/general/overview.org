@@ -88,8 +88,28 @@ This list is probably not complete, a given project may need additional types sp
 | *Test*         | Anchoring, Joining, Compliance | Test code intended for long term retention, follow "no mocking" rule       |
 | *Covert Test*  | Anchoring, Joining, Compliance | Test code targeted at coverage gaps, follow "mostly no mocking" rule       |
 
+** Role Definitions
+This list is probably not yet complete. Need additions that emerge might be either process wide or project specific.
 
-Rules:
+| *Role Name*   |                                                                                                      |
+| Clerk         | Interacts with user to sequence through defined process management steps, calling on othe roles      |
+| Analyst       | Thinks about elements required to complete story, studies code and docs, suggests Task breakdown     |
+| Coder         | Performs code creation and modification as Task directs                                              |
+| Test Designer | Analyzes target code (specified in Story or Task) and develops Tasks to build tests (see Test Rules) |
+| Reporter      | Tracks repo changes, builds Task and Story reports capturing any extra user input and feedback       |
+
+** Directives
+Stories and Tasks may have additional instructions that focus more tightly on what the agentic assistant is expected to
+do, refining the "role" instructions. 
+
+Example directives:
+- "Build minimal spike ensuring resource supplies needed info"
+- "Let user evaluate UI component selection"
+- "Identify existing code related to Story goals"
+- "Scope code changes for Story and breakdown into proposed Tasks for new and changed code separately"
+
+
+* Test Rules
 
 1. No Mocking test rule
    1. Tests don't just test code, they test intention behind the code
