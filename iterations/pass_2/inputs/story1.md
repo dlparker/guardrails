@@ -1,0 +1,68 @@
+# Story specific
+
+Common Story Fields:
+
+  ------------------ -------------------------------------------------------------------------
+  Name               Value
+  Story ID           1
+  Story Name         GnuCash finder experiement
+  phase              exploring
+  story type         study
+  directive          produce example code for user evaluation of specific solution options
+  expected results   user choice of one of the options, or a new story to try something else
+  ------------------ -------------------------------------------------------------------------
+
+## Story Name: GnuCash finder experiement
+
+**Story goal: Review UI methods of identifying and loading GnuCash file**
+
+Using the extend the textual base UI stub found in scripts/tx~main~.py and src/ctrack/textual/tx~main~.py, experiment with methods of selecting a GnuCash file to target with the application. This selection would be the first step in creating an app based on the flow defined in src/ctrack/flow.py, review tests/test~flow~.py to understand the relevance of selecting and loading the GnuCash file.
+
+Keep in mindthat the underlying DataService mechanism only supports a single GnuCash target file so trying to load a new one may require some sort of reset of the database, probably by removing it an re-initializing the DataService.
+
+Options to try are:
+
+1.  The built in DirectoryTree - doesn\'t do file picker directly, but should be good base for implementing one
+2.  textual-fspicker
+3.  textual-filedrop
+
+### Here are some Task sketches, actual task definitions my need more information:
+
+Task 1: Common Task Fields:
+
+  ------------------- ----------------------------
+  Name                Value
+  parent story id     1
+  parent story name   GnuCash finder experiement
+  task id             1
+  task name           try DirectoryTree picker
+  task type           spike code
+  ------------------- ----------------------------
+
+Write example file picker UI elements in textual using the DirectoryTree function targeting the example gnuchcash file that is found in demo~work~ after running \"uv run scripts/prep~work~.py\". Do some kind of basic validation of successful load by printing the output of one of the src/ctrack/data~service~.py query operations.
+
+Task 2: Common Task Fields:
+
+  ------------------- ----------------------------
+  Name                Value
+  parent story id     1
+  parent story name   GnuCash finder experiement
+  task id             2
+  task name           try textual-fspicker
+  task type           spike code
+  ------------------- ----------------------------
+
+Write example file picker UI elements in textual using the textual-fspicker library targeting the example gnuchcash file that is found in demo~work~ after running \"uv run scripts/prep~work~.py\". Do some kind of basic validation of successful load by printing the output of one of the src/ctrack/data~service~.py query operations.
+
+Task 2: Common Task Fields:
+
+  ------------------- ----------------------------
+  Name                Value
+  parent story id     1
+  parent story name   GnuCash finder experiement
+  task id             3
+  task name           try textual-filedrop
+  task type           spike code
+  ------------------- ----------------------------
+
+Write example file picker UI elements in textual using the textual-filedrop library targeting the example gnuchcash file that is found in demo~work~ after running \"uv run scripts/prep~work~.py\". Do some kind of basic validation of successful load by printing the output of one of the src/ctrack/data~service~.py query operations.

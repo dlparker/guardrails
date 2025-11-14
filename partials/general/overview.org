@@ -1,8 +1,32 @@
-* Guardrails Development Process
+** Guardrails Development Process
 
-This process is designed to apply a specific development style to agentic assisted coding
+This process is designed to apply a specific development style to agentic assisted coding. Agentic
+assisted coding tools have been tuned to function in the so-called "vibe coding" mode, where
+the user asks for some result at a fairly high conceptual level and the LLM figures out the
+high level and detailed design and produces the potentially large volume of coded needed to
+implment the design.
 
-** Development Process Theory
+In contrast, this process is focused on mostly small iterations. A major motivation in that
+focus is the desire to have the user acquire a high level of comprehension of the results
+of the agentic assistant's work product. Observation has shown that LLMs consistently expand
+the scope of work beyound the context of the request unless constrained. This leads to
+prematurely adding structure and features to code that has not yet been deemed worthy of
+retention. This leads to several problems, with two being the most important. First, that the
+user is overwhelmed by the volume and complexity of the code that must be reviewed. Second
+the LLM context gets polluted with goals inserted by the LLM itself and not the user, requiring
+context resets to purge unwanted concepts with the risk of losing wanted concepts.
+
+So to mitigate these problems, this process guides the agentic assistant to focus on small
+iterations that limit the work product to the user's intended scope. The user creates Stories,
+with some carefully guided agentic assistance, that define the desired result and a set
+of constraints intended to intercept the LLM's tendency to expand scope. The agetic assistant
+then proposes Tasks that encompass a small unit of work. This step has some guidance to
+maintain the scope limits, but it is largely relegated to the agent/LLM. The user explicitly
+approves or rejects the Task breakdown, and then the agentic assistant completes the approved
+work. The rejected Task definitions are modified iteratvely until approval is secured.
+
+
+*** Development Process Theory
 
 This process is focused on two things, interation style and design analysis through experiment.
 
@@ -29,9 +53,9 @@ So, these prinicples should guide the work:
    flexibility for more innovation.
    
 
-* Process Taxonomies
+** Process Taxonomies
 
-** Phase Definitions
+*** Phase Definitions
 
 Each process step, typically a story and its component tasks will be designated to
 be part of a "phase", which declares the work to have a completion goal that is
@@ -55,7 +79,7 @@ levels at the same time.
 | *Re-Founding*  | Compliance, Joining, Anchoring, User   | Adding or changing support for new features                  |
 
 
-** Story Definitions
+*** Story Definitions
 Stories will be created and maintained in written form and will service as the primary
 increment of process progress. Almost all stories will be implemented as a series of tasks,
 unless the story reduces simply to a single task. Proof of Concept stories might be like that.
@@ -63,18 +87,18 @@ unless the story reduces simply to a single task. Proof of Concept stories might
 This list is mostly complete, any additional story type should probably be added to the
 process definition, not just for the target project.
 
-| *Story Type*   | *Focus*                                                                     | 
-| **Study**      | Answering questions about problem space and possible solution options       | 
-| **POC**        | enough code to demo key solutions, very short term                          | 
-| **Framing**    | Establish early component boundaries, mostly short term                     | 
-| **Glueing**    | Scaffoling interagration to support early components                        | 
-| **Anchoring**  | Improving components to solidify APIs and primary logic to production level | 
-| **Joining**    | Improving integrations                                                      | 
-| **User**       | User interactions                                                           | 
-| **Compliance** | Meeting standards for code coverage, documentation, UI style guide,         | 
+| *Story Type* | *Focus*                                                                     |
+| *Study*      | Answering questions about problem space and possible solution options       |
+| *POC*        | enough code to demo key solutions, very short term                          |
+| *Framing*    | Establish early component boundaries, mostly short term                     |
+| *Glueing*    | Scaffoling interagration to support early components                        |
+| *Anchoring*  | Improving components to solidify APIs and primary logic to production level |
+| *Joining*    | Improving integrations                                                      |
+| *User*       | User interactions                                                           |                                                                             |
+| *Compliance* | Meeting standards for code coverage, documentation, UI style guide,         |
 
 
-** Task Definitions
+*** Task Definitions
 
 This list is probably not complete, a given project may need additional types specific to that project.
 
@@ -88,8 +112,11 @@ This list is probably not complete, a given project may need additional types sp
 | *Test*         | Anchoring, Joining, Compliance | Test code intended for long term retention, follow "no mocking" rule       |
 | *Covert Test*  | Anchoring, Joining, Compliance | Test code targeted at coverage gaps, follow "mostly no mocking" rule       |
 
-** Role Definitions
+*** Role Definitions
 This list is probably not yet complete. Need additions that emerge might be either process wide or project specific.
+As this process is developed, it is likely that specific rules and other guidance will be created to instruct
+agents as to expectations for specific roles. There maybe be project specific guidance for this too, such as specifying
+tools or formats for Task definitions or Reports.
 
 | *Role Name*   |                                                                                                      |
 | Clerk         | Interacts with user to sequence through defined process management steps, calling on othe roles      |
@@ -98,7 +125,7 @@ This list is probably not yet complete. Need additions that emerge might be eith
 | Test Designer | Analyzes target code (specified in Story or Task) and develops Tasks to build tests (see Test Rules) |
 | Reporter      | Tracks repo changes, builds Task and Story reports capturing any extra user input and feedback       |
 
-** Directives
+*** Directives
 Stories and Tasks may have additional instructions that focus more tightly on what the agentic assistant is expected to
 do, refining the "role" instructions. 
 
@@ -109,7 +136,7 @@ Example directives:
 - "Scope code changes for Story and breakdown into proposed Tasks for new and changed code separately"
 
 
-* Test Rules
+** Test Rules
 
 1. No Mocking test rule
    1. Tests don't just test code, they test intention behind the code
@@ -121,5 +148,58 @@ Example directives:
    2. Typically only applies to error handling code
    3. Using mocking allowed but only if the cost of applying the No Mocking rule is too high.
 
-      
+* Story Standard Workflow
 
+Stories always involve actions in the "clerk" and "reporter" role, plus one or more
+roles as needed per task.
+
+1. Clerk: Capture current git hash
+2. Analyst: Create task files in process_docs/tasks/todo/ see Task Definition Outline below
+3. For each task:
+   1. Clerk: Record starting git hash in task file and move file to process_docs/tasks/doing
+   2. Coder: Build minimal spike
+   3. Clerk: Record ending git hash in task file
+   4. Reporter: Present results to user for save/discard/retire decisions
+      1. If user says discard, remove results and discard, move task file to process_docs/tasks/discarded
+      2. If user says retire, move the results to a notes file with a name based on the story name and commit it,
+         move task file to process_docs/tasks/discarded
+      3. If user says save, move task file to process_docs/tasks/done
+4. Reporter: Generate summary report analyzing experiments and decisions
+5. Reporter: Collector story disposition from user for save/discard/retire
+6. Move story file to process_docs/story/done, process_docs/story/retired, process_docs/story/discarded
+
+The git hashes enable retrospective analysis. Reporter role can examine 
+exactly what was changed via `git diff {start_hash} {end_hash}`.
+
+
+* Task Definition Outline
+
+The story is broken into tasks by analysis of the story and the existing code, keeping
+scope small, in the process spefified in the Story Standard Workflow above. *Note:* a Story
+is broken down into Tasks first before any of those Tasks are executed. User approval
+or revision followed by approval is required for each Task definition.
+
+
+** Available Resources:
+- Full access to all project files and documentation
+- Agent expected to explore codebase to understand implementation details
+- CLAUDE.md provides project structure and common commands
+ 
+** Expected Task Definition Format:
+- Brief table with task metadata as described above
+- 1-2 sentence description of the focus area
+- NO detailed step-by-step instructions
+- NO comprehensive validation criteria - agent either deduces it from nature of Task or requests feedback from user and revises
+
+** Task File Organization:
+- Create individual task files in `process_docs/tasks/todo/`
+- Naming convention: `task_1_1.md`, `task_1_2.md`, `task_1_3.md`
+- Note: File-based approach is temporary, will be replaced by process documents database with CLI tools
+
+** Execution Model:
+- Obey the guidance of the process definition and the Story and Task details
+- Each Task is an independent work unit and might be independent of the other Task in the Story,
+  especially for Study Stories
+- Each Tasks work product commits separately: "[Story ID]: [Story Name]: [Task ID]:  [Task Type ]: [Task name]"
+- User evaluates each result, then save/retire/discard
+- Next task starts fresh (may revert previous code via git reset depending on user evaluation)

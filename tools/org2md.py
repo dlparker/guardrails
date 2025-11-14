@@ -8,7 +8,7 @@ dirs = [
     top / "partials" / "modes",
     top / "partials" / "phases",
     top / "partials" / "roles",
-    top / "manual" / "stories",
+    top / "iterations" / "pass_2",
 ]
 for tdir in dirs:
     for sfile in tdir.glob("*.org"):
