@@ -33,6 +33,29 @@ Phase-specific rules translate these principles into actionable guidance, ensuri
 | **Low-Medium**    | Fortifying     | "Implement exact specifications"          | Provides detailed requirements        | Detailed specs + compliance rules     |
 | **Low**           | Re-Founding    | "Precise implementation, no deviations"   | Complete specifications               | Exact requirements + regression protection |
 
+## Universal Constraints (Apply to ALL Phases)
+
+These **Rule 0** constraints apply universally, regardless of phase:
+
+| **Rule** | **Statement** | **Purpose** | **Examples** |
+|---------|--------------|-------------|-------------|
+| **Rule 0** | **Complete, Then Stop** | Deliver exactly what was requested | "Future CLI tool" → ignore<br>"JSON later" → ignore |
+| **Rule 1** | **Context ≠ Requirements** | Background = understanding only | User rationale ≠ action items |
+| **Rule 2** | **No Implicit Scope Expansion** | Don't infer additional requirements | "Might be useful for X" ≠ implement X |
+
+### Rule 0: Complete, Then Stop (MANDATORY)
+
+**Core Principle**: 
+> "A skilled human developer would understand that this is background... LLM based coding assistants will keep dragging it back in"
+
+**Implementation**:
+```markdown
+REQUEST: [Exact deliverable - 1-2 sentences]
+CONTEXT: [Background for understanding ONLY]
+
+DELIVER: Exactly the REQUEST above
+IGNORE: Future plans, rationale, possibilities mentioned in CONTEXT
+
 ### Phase-Specific Behavioral Rules
 
 #### Exploring Phase: Maximum Autonomy, Minimum Investment

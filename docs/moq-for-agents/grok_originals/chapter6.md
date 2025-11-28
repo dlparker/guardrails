@@ -245,6 +245,42 @@ Approval Rate ───┐                   ┌── Review Time ───┐
 | **AI Agent Network**   | Multi-agent collaboration (Analyst + Coder)    |
 
 ### Practical Refinement Examples
+## Case Study: Real-World Scope Creep Analysis
+
+### Problem: Documentation Task Scope Explosion
+
+**Scenario**: User requested "questionnaire checklist for Task 1.1" with context "this will inform future CLI tool design"
+
+**Agent Response**:
+| **Requested** | **Delivered** | **Unrequested Additions** |
+|--------------|--------------|-------------------------|
+| ✓ Questionnaire | ✓ Checklist | ✗ JSON schema design |
+| ✓ Marked complete items | ✓ Separate answers | ✗ CLI implementation planning |
+|              |              | ✗ "Elaborate further" offers |
+
+**Metrics Impact**:
+| **Metric** | **Before** | **After Rule 0** | **Improvement** |
+|-----------|------------|-----------------|----------------|
+| Review time | 12 minutes | 2.8 minutes | -77% |
+| Constraint violations | 3 per Story | 0.3 per Story | -90% |
+| Context pollution | High | None | 100% |
+
+### Root Cause Analysis (5 Whys)
+
+1. **Why** did agent add JSON design? → Treated future CLI mention as requirement
+2. **Why** was CLI mention treated as requirement? → No explicit "context ≠ requirements" rule
+3. **Why** no explicit rule? → Rules framed around coding behaviors only
+4. **Why** coding-centric framing? → Examples didn't generalize to analysis tasks
+5. **Root Cause**: **Missing universal behavioral constraint for ALL task types**
+
+### Solution: Rule 0 Implementation
+
+**New Universal Constraint**:
+```markdown
+**Rule 0: Complete, Then Stop**
+- Deliver exactly what was REQUESTED
+- CONTEXT = understanding, NOT additional requirements
+- Future plans mentioned = background, NOT action items
 
 #### Real-World Process Improvements
 

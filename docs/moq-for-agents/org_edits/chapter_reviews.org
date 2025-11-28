@@ -1,0 +1,222 @@
+
+**** Chapter Reviews
+
+***** Chapter 1
+
+Completely satisfactory, though I did edit it quite a bit to include examples
+drawn from the experience of getting Grok to write these chapters.
+
+***** Chapter 2
+
+Fairly satisfactory. Grok did pull some ideas from the repo that it didn't really understand
+and therefore didn't handle well. The phase names in the project were chosen by exploring
+an analogy to the process of a group of humans moving into a new (to them) geographic territory.
+It is meant as a memory aid for human participants in this project. Grok seems to have not understood
+this and generally seems to be writing for LLM readers instead of humans anyway, so it missed the
+importance of either explaining the analogy completely or else making no referencee to it at all. The
+references it made would be useless to any reader.
+
+To correct this, a line was added to direct the reader's attention to a (not yet added) appendix that
+contains an explanation of this analogy.
+
+Otherwise the chapter was very good.
+
+***** Chapter 3
+
+Some good stuff, but a serious problem emerged. The original material I supplied included a discussion of
+the autonomy that an LLM should exhibit when it came to certain questions about completing requested work.
+This can from an interaction with Claude Code where Claude requested clarification about how to interpret
+a vague bit of direction that I had supplied. I deliberately methoned that "it might be necessary to reset
+the database, which can be done with this command". I did not explain why it might be necessary or provide
+guidance on how to decide that question. Claude suggested that I include some language that told the agent
+that it could make that decision as it deemed fit without further guidance. This resulted in a more
+general guidance about how much autonomy was appropriate in each phase of the process.
+
+When Grok absorbed this, it elevated the idea to a core principle, and even stated it that way:
+
+#+BEGIN_EXAMPLE
+The *Autonomy Spectrum* (introduced in Chapter 2) provides the
+foundational principle:
+
+Exploring → Pioneering → Settling → Fortifying → Re-Founding
+   ↑                                                    ↑
+High Autonomy                                  High Specification
+(figure it out)                                (follow exact specs)
+
+This spectrum determines: - *Agent decision-making authority*: From
+pragmatic problem-solving to strict specification adherence -
+*Constraint granularity*: From high-level principles to detailed
+requirements - *Validation expectations*: From subjective evaluation to
+objective criteria - *Code quality investment*: From throwaway spikes to
+production polish
+#+END_EXAMPLE
+
+Its actual place in the higherarchy of rules is much more modest, it mearly
+provides guidance to how to try to resolve ambiguity and vagueness in the
+prompts. It also misses the fact that low autonomy means vagueness should
+result in a request to the user to clarify, it does not imply that the prompt
+is certified to be a complete and accurate spec of the intention.
+
+One result of this error shows up in the explanation of the "Study" Story type:
+
+#+BEGIN_EXAMPLE
+**Primary Story Types**: Study, POC  
+**Autonomy Level**: HIGH  
+**Guiding Principle**: "Learn fast, invest minimally, discard freely"
+
+**Core Rules**:
+
+1. **Information Over Implementation**
+   - Goal is learning, not production code
+   - Write minimum code necessary to answer questions or reveal solution characteristics
+   - **Agent Directive**: "Produce just enough code to demonstrate the concept or answer the study question"
+
+2. **Vague is Permissive**
+   - Phrases like "probably need to," "some kind of," "might require" are **permissions to handle pragmatically**
+   - **Agent Directive**: "A journeyman programmer would figure it out - you should too"
+   - Don't ask for clarification unless the learning objective itself is unclear
+
+   | **Vague Phrase**            | **Agent Action**                          |
+   |-----------------------------|------------------------------------------|
+   | "Probably need to remove DB" | Delete database if it blocks progress    |
+   | "Some kind of validation"   | Pick any reasonable validation approach  |
+   | "Might require reset"       | Reset if you think it's needed           |
+
+3. **No Production Thinking**
+   - **Strictly ignore** (unless explicitly requested):
+     | **Category**             | **Examples**                          |
+     |--------------------------|---------------------------------------|
+     | Error handling           | try/except blocks, validation         |
+     | UI polish                | Styling, animations, responsive design |
+     | Edge cases               | Rare scenarios, boundary conditions   |
+     | Performance              | Optimization, caching                 |
+     | Logging/monitoring       | Log statements, metrics               |
+     | Documentation            | Docstrings, comments                 |
+     | Reusability              | Abstractions, design patterns         |
+     | Test coverage            | Unit tests, integration tests         |
+
+4. **Unblock Yourself**
+   - **Agent Directive**: "Resolve obstacles with simplest possible approach"
+   | **Obstacle**             | **Pragmatic Solution**                     |
+   |--------------------------|-------------------------------------------|
+   | Database state issues    | Delete database file                      |
+   | Missing files            | Hard-code test data paths                 |
+   | Dependency conflicts     | Install/update as needed                  |
+   | Unclear APIs             | Try most obvious approach first           |
+
+5. **Measure Success by Learning**
+   | **Success Criteria**      | **NOT Success Criteria**                  |
+   |--------------------------|------------------------------------------|
+   | ✓ Answered the question  | ✗ Maintainable code                      |
+   | ✓ Revealed new info      | ✗ Testable code                          |
+   | ✓ Demonstrated concept   | ✗ Complete implementation                |
+   |                          | ✗ Would pass code review                 |
+
+6. **Throw-Away Mindset**
+   - **Agent Directive**: "Assume this code will be discarded or heavily modified"
+   | **Use This**             | **Avoid This**                           |
+   |--------------------------|------------------------------------------|
+   | Hard-coded values        | Configuration files                      |
+   | Print statements         | Logging frameworks                       |
+   | Simple functions         | Classes and abstractions                 |
+   | Inline code              | Modular architecture                     |
+
+#+END_EXAMPLE
+
+Most of that is ok, though it would be better if item 2 about
+vagueness was the last item and it emphasised that this is only for
+instructions that are obviously vague, not where there is a lack
+of clarity on confusing specificity. Phrased the way it is will
+cause LLMs to start doing what they think you want instead of what
+you asked for.
+
+The bigger problem is item 4 "Unblock yourself". It is in direct conflict with the
+intention of constraing the results to limit the expansion of scope. It takes
+the autonomy concept and makes it coequal with the constraints concept in such
+a way that the LLM will definitely ignore the constraints and supply its own
+judgement. That can clearly be seen in operation in that point itself, in the
+"dependency conflicts" line. At no time did I ever write or imply anything that
+would give the LLM license to install or update dependencies. This is the kind
+of scope creep that absolutely wrecks my attempt to take small steps and know
+what the steps imply for the gradual progress towards the ultimate goal.
+
+Both of these problems are great examples of *Slop*. Grok got so enamered of
+something that it could expand upon that it corrupted the results in a
+fundamental way.
+
+This chapter also exhibits the "rule 0" error, which I discuss after the
+last chapter review in the general review section. There is some significant
+*Slop* in this chapter centered on that error that significantly reduces
+the coherence of the whole chapter.
+
+The is a general weakness in the specific tone of quite a few elements of this
+chapter that reflects Grok's failure to apply the principles of this process
+to the work it is doing on this document. That is okay since I didn't ask for that
+application, but it is something I will have to correct and illustrates the
+suitability isses. The word choices and phrasing often fail to convey the fact
+that the primary effect of rules and structure should be to constrain the LLM
+to avoid using its own judgement, not to encourage it to do so.
+
+Here is an example. In the defition of the "Settling Phase" there is a line that says
+
+#+BEGIN_EXAMPLE
+2. **Basic Error Handling**: Handle expected failure modes
+#+END_EXAMPLE
+
+An LLM will interpret this by adding all kinds of error handling. My coding language is nearly
+always python, and it is a stupid error to catch errors in low level code when you can't
+determine the proper response or report them to the user. I have had lots of problems due
+to LLMs doing this. Some error happens in some LLM generated code and a try/catch statement
+swallows all the context and all I see when I am trying to debug it is some single line
+that gives me no idea where the error occured, what it was trying to do, what actually didn't
+work, etc. If the Artifical Stupid had just let the error propogate then I would have received
+the full exception stack and would have a good start on figuring out the problem.
+
+Even worse, on many occasions the LLM has added retry loops to code such as RPC comms components!
+You can't do that with non-idempotent RPCs unless you are sure that the call never started on the
+other end of the pipe.
+
+Clearly the training data included a lot of code from inexperienced and or acedemic coders who
+have never learned the rule that you never handle an error in your code unless you really know how
+to handle it and allow the program to proceed unhindered.
+
+So, all of the text that I provided Grok during this document drafting process treated
+error handling very carefully. The only handling code that I want LLMs to add is for the
+kind of error that is a normal condition of a properly running program. Examples are
+asynchronus tasks getting cancelled during cleanup, sockets returning errors during shutdown,
+and maybe a few others. All other kinds of error handling should be added only by me, the human
+in the loop, unless the LLM receives explicit instructions.
+
+And yet here is Grok writing instructions that will cause a full flowering of the stupidity
+that is an LLM's idea of python error handling best practices. Sigh.
+
+This "tone" problem is a big one. It is so big that when combined with the other issues the
+chapter needs a complete re-write. Hopefully some of the text can be saved with minor modifications.
+
+
+
+
+***** Chapter 4
+
+
+
+***** The "rule_0" problem
+
+I after some of the chapters had a first draft, I provided Grok with some captured interaction
+between me and Claude Code where I explained to Claude that it had used information that I
+provided as explanitory background as though it was additional specification, and therefore
+it expanded the scope of the work inappropriately. Grok proposed to encorporate the lesson
+about the difference between background and directive information into a new "rule 0" that it
+would add to various parts of the text. I directed Grok to proceed. The result is a bunch
+of text that does nothing of the kind. What Grok decided "rule 0" should be
+is "Deliver exactly what was requested". That completely fails to identify the distinction
+and will not produce the desired constraint. I think this is an example of a type of *Slop* 
+where Grock thinks that the meaning of this rule statement is evident from the conversation
+context, so it makes no effort to make it match the work product context.
+
+All of the text related to this needs to be removed, and instead some new part of the process
+document needs to happen. Maybe an option "background" component of a Story, with language
+in the general Story definition that explains the difference and explicity rejects using
+anything in the background to expand the scope. In fact, in general I provide background
+in an effort to narrow the scope of the request to be more precise, so maybe that should
+be explicit in the language of the Story component.

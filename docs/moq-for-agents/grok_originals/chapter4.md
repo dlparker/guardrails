@@ -102,12 +102,23 @@ git show retired/story1-task1.1
 | **Task Type**    | Spike Code                         |
 | **Phase**        | Exploring                          |
 | **Status**       | todo                               |
-| **Start Hash**   |                                    |
-| **End Hash**     |                                    |
+
+## Clear Separation (MANDATORY)
+
+**REQUEST**:
+Implement file picker using DirectoryTree widget. Target example GnuCash file in `demo_work/`. Validate successful load using DataService.
+
+**CONTEXT**:
+This evaluation will inform production file picker selection.
+
+## Universal Constraints (ALWAYS APPLY)
+1. **Rule 0**: Complete, then stop - deliver REQUEST only
+2. **Context ≠ Requirements**: Ignore future production concerns
+3. **Phase Constraints**: [Exploring phase rules]
 
 ## Focus
-Implement file picker using DirectoryTree widget. Target example GnuCash file in `demo_work/`. Validate successful load using DataService query operations.
-```
+[1-2 sentence implementation guidance]
+
 
 **File Organization**:
 ```

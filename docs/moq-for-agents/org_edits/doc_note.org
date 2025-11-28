@@ -1,0 +1,8 @@
+
+1. Figure out how to link from process doc to review doc
+2. finish chapter_review.org as a separate doc.
+   1. Add pass_3/story1.org (have to build it from md) to appendix, also other pass_3 stuff
+   2. Add pass_4 stuff too.
+3. Add appendix
+   1. Foundations Concept
+   2. Story and Task templates

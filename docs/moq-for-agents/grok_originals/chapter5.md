@@ -34,28 +34,28 @@ Effective context management transforms agentic coding from frustrating, session
 ```
 CONTEXT FOR TASK EXECUTION:
 
-🔍 PHASE: [Phase Name] - [Autonomy Level]
+🔍 UNIVERSAL CONSTRAINTS (MANDATORY - ALL PHASES):
+0. **Complete, Then Stop**: Deliver REQUEST only
+1. **Context ≠ Requirements**: Background for understanding ONLY
+
 📋 STORY: [Story ID] - [Name]
-   Goal: [1-sentence objective]
+   REQUEST: [Exact story goal]
+   CONTEXT: [Background information]
+
 🎯 TASK: [Task ID] - [Name] ([Task Type])
-   Focus: [1-2 sentence description]
+   REQUEST: [Exact task deliverable]
+   CONTEXT: [Task-specific background]
 
-⚡ PHASE CONSTRAINTS (MANDATORY):
-1. [Constraint 1]
-2. [Constraint 2]
-3. [Constraint 3]
+⚡ PHASE CONSTRAINTS:
+[3-5 phase-specific rules]
 
-🛠️ RESOURCES:
-- Full codebase access
-- [Project-specific docs: CLAUDE.md, etc.]
-- Current Git state: [hash]
+🚫 PROHIBITED (Universal + Phase):
+- Future architecture from CONTEXT
+- Production features not in REQUEST
+- [Phase-specific prohibitions]
 
-📝 EXECUTION DIRECTIVE:
-Execute this Task following phase constraints above.
-Commit message: "[Story-ID]: [Story-Name]: [Task-ID]: [Task-Type]: [Task-Name]"
-
-🚫 PROHIBITED (this phase):
-- [3-5 specific things to avoid]
+🛠️ EXECUTION DIRECTIVE:
+Execute exactly the REQUEST above. Ignore all CONTEXT mentions of future work.
 ```
 
 #### Example Context Supply

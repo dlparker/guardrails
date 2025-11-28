@@ -10,7 +10,7 @@ My goal is to develop a framework called "Guardrails" that bridges the gap betwe
 ### Problem Statement: Challenges with Agentic Coding Tools
 
 #### Overview
-I have approximately 300 hours of experience using Claude Code for various coding projects. My results have been mixed, with notably better outcomes when making enhancements or modifications to existing code compared to starting new projects from scratch. After reflection, I believe there are two primary reasons for these challenges.
+At the moment I am writing this sentance I have approximately 300 hours of experience using Claude Code for various coding projects. My results have been mixed, with notably better outcomes when making enhancements or modifications to existing code compared to starting new projects from scratch. After reflection, I believe there are two primary reasons for these challenges.
 
 #### Reason 1: Mismatch in Coding Process and Prompt Response
 My personal approach to coding, especially for new projects, differs significantly from how Claude (and other LLMs I've tried) interprets and responds to coding prompts. This mismatch often leads to unproductive interactions.
@@ -34,6 +34,10 @@ The second major issue is the difficulty in managing and correcting the context 
 - **Course Correction Challenges**: When the agent introduces unwanted elements, it's hard to implement an effective correction that prevents backsliding—i.e., the same ideas reappearing in later steps.
 - **Session Degradation**: I've observed that the longer a session continues, the poorer the quality of responses to prompts becomes.
 - **Workarounds**: This often forces me to clear the session entirely and manually reconstruct the essential context of my ongoing work, which is inefficient and disruptive.
+
+#### General problems with LLM usage
+
+Most of the problems I have observed can be categorized as **Bloat** or **Slop**.
 
 ### Approach Statement: Constraints and Context Management
 

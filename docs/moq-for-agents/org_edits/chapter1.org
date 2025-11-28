@@ -1,0 +1,356 @@
+* Applying Metaphysics of Quality to Agentic Coding: The Guardrails Framework
+:PROPERTIES:
+:CUSTOM_ID: applying-metaphysics-of-quality-to-agentic-coding-the-guardrails-framework
+:END:
+** Chapter 1: Identifying the Mismatch and Outlining a Path Forward
+:PROPERTIES:
+:CUSTOM_ID: chapter-1-identifying-the-mismatch-and-outlining-a-path-forward
+:END:
+*** Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+This document explores the application of Robert Pirsig's Metaphysics of
+Quality (MOQ) to the challenges of using agentic coding tools, such as
+large language models (LLMs) like Claude or Grok. MOQ posits that
+quality emerges from a rhythmic interplay between Dynamic Quality
+(DQ)---the innovative, disruptive force of exploration---and Static
+Quality (SQ)---the stabilizing mechanism that latches onto proven
+patterns. In software development, this translates to rapid, low-cost
+experimentation followed by selective refinement and integration.
+
+My goal is to develop a framework called "Guardrails" that bridges the
+gap between my personal iterative coding process and the default
+behaviors of these tools. Guardrails aims to enforce constraints and
+manage context in ways that promote DQ/SQ cycles, reducing frustration
+and inefficiency. This chapter combines my initial problem statement
+with the high-level approach I'm taking, setting the stage for deeper
+discussions in subsequent chapters.
+
+*** Problem Statement: Challenges with Agentic Coding Tools
+:PROPERTIES:
+:CUSTOM_ID: problem-statement-challenges-with-agentic-coding-tools
+:END:
+**** Overview
+:PROPERTIES:
+:CUSTOM_ID: overview
+:END:
+
+At the moment I am writing this sentance I have approximately 300 hours
+of experience using Claude Code for various coding projects. My results
+have been mixed, with notably better outcomes when making enhancements
+or modifications to existing code compared to starting new projects from
+scratch. 
+
+Most of the problems I have observed can be categorized as *Bloat* or *Slop*.
+Indeed, these two categories are typically a problem with all of my LLM
+interaction, not just coding. This document will focus primarly on the
+coding issues, however.
+
+***** *Bloat*
+This is the result of the LLM deciding to add context or enhancements
+that the user has not identified as part of the desired result.
+
+For example, LLMs frequently expand the scope beyound the request. If
+I ask for an example of how to use a specific feature of a libray in
+the context of some existing code, such as "show me how to use library
+XYZ to add feature ABC to the "du_stuff" function", the LLM is likely
+to build a new component for the feature ABC with an API that the LLM
+imagines you'd want in a finished body of code, and add error handling
+and docstrings, etc. If there are elements of the existing project's
+test structure that touch on the "du_stuff" function, the LLM is
+likely to build new tests for the new ABC feature usage component.
+
+This means that I have to review a bunch of stuff that is not relevant
+to my request, which I don't want to do. If the response is extensive,
+I am likely to skimp on the review and just look at the part that I think
+is relevant. This feels wrong, I shouldn't be accepting the insertion of
+new code into my project without review, but if I don't yet know if I want to use
+the suggested pattern for the actual focus of the prompt, then the only
+other good choices are to:
+
+- tell the LLM to undo all that work, then rewrite the prompt to try to get less bloat
+- spend a bunch of time reviewing the bloat code, and most likely at
+  least partly re-write it, still without knowing if I am going to
+  have to discard it.
+
+
+***** *Slop*
+This is output that has an unacceptably low match to the stated goals in the prompt.
+
+A primary source of slop is lack of clarity in the prompt, especially lack of clearly
+isolated topics for the goal. With insufficient specificity the LLM will do what it does,
+which is predict what you'd say next on the subject, and the result is often not what
+you'd say next. This is a problem if you are trying to figure something out, and you
+are unclear on both what needs to be done and how to do it. This is a common position
+early in a project.
+
+To continue the above *Bloat* example, if I accept the bloat without enough review,
+and want to refine the result of the previous prompt to change the relevant code
+section to continue the coding process, after a few or possibly only a single additional
+prompt the LLM outut is likely to start losing focus on the actual relevant code, and
+begin to produce code in that area that does not have the characteristics that I originally
+requested. The next "Bloat and Slop example" subsection below illustrates how this sort of slop can develop.
+
+
+**** Bloat impact analysis: Mismatch in Coding Process and Prompt Response
+:PROPERTIES:
+:CUSTOM_ID: reason-1-mismatch-in-coding-process-and-prompt-response
+:END:
+My personal approach to coding, especially for new projects, differs
+significantly from how Claude (and other LLMs I've tried) interprets and
+responds to coding prompts. This mismatch often leads to unproductive
+interactions dominated by struggling with *Bloat*.
+
+***** My Coding Process
+:PROPERTIES:
+:CUSTOM_ID: my-coding-process
+:END:
+- *Rapid Iteration in Early Phases*: I employ a very quick code/test
+  cycle, often completing several cycles per minute during the initial
+  stages of a component. These cycles help me explore both the problem
+  space and potential solutions dynamically.
+- *Deferred Structure Planning*: Only once I have a solid working
+  understanding of the specific problem and some functional code do I
+  begin considering the appropriate code structure to encapsulate that
+  solution.
+- *Progressive Structuring*: I then shift to slightly slower cycles to
+  "feel out" structures that can integrate this solution with other
+  existing or anticipated components.
+- *Higher-Level Integration*: Finally, I focus on broader architecture
+  to tie everything into a maintainable, complete solution beyond a mere
+  prototype.
+- *Concurrent Stages*: Different parts of the project can be at varying
+  stages of development simultaneously.
+
+***** Challenges with Claude
+:PROPERTIES:
+:CUSTOM_ID: challenges-with-claude
+:END:
+- *Goals of My Process*: This approach serves two key goals---producing
+  working code and building an internal mental model that enables me to
+  improve and maintain it over time.
+- *Claude's Response Style*: In contrast, Claude treats coding prompts
+  as requests to fully define the implied end goal and deliver a
+  complete, production-ready solution. This often includes unsolicited
+  extensions for extensibility, manageability, and other features. This is *Bloat*.
+- *Outcomes*: When I attempt to use Claude to build example code for
+  unfamiliar solution components, I typically end up with little or no
+  usable code, minimal new knowledge added to my mental toolkit, and
+  significant frustration from wasted time. This is *Slop*
+- *Review Burden*: I become exhausted reviewing large amounts of code
+  and trying to guide the agent to remove unwanted elements that I
+  neither requested nor desired. The need to do this is driven by
+  both *Bloat* and *Slop*.
+
+**** Source of Slop: Context Pollution
+:PROPERTIES:
+:CUSTOM_ID: reason-2-context-pollution
+:END:
+The second major issue is the difficulty in managing and correcting the
+context within a session, which compounds the problems from the first
+reason.
+
+- *Course Correction Challenges*: When the agent introduces unwanted
+  elements, it's hard to implement an effective correction that prevents
+  backsliding---i.e., the same ideas reappearing in later steps.
+- *Session Degradation*: I've observed that the longer a session
+  continues, the poorer the quality of responses to prompts becomes.
+- *Workarounds*: This often forces me to clear the session entirely and
+  manually reconstruct the essential context of my ongoing work, which
+  is inefficient and disruptive.
+
+
+*** Approach Statement: Constraints and Context Management
+:PROPERTIES:
+:CUSTOM_ID: approach-statement-constraints-and-context-management
+:END:
+**** Overview
+:PROPERTIES:
+:CUSTOM_ID: overview-1
+:END:
+My approach to reducing the impact of *Bloat* and *Slop* on my coding process
+with agentic coding tools (like Claude) consists of two main
+components: constraints and context management. These components aim to
+align the agent's responses more closely with my iterative, exploratory
+style of development, ultimately evolving into a formalized framework
+(e.g., "Guardrails") for guiding AI agents in coding tasks.
+
+**** Component 1: Constraints
+:PROPERTIES:
+:CUSTOM_ID: component-1-constraints
+:END:
+This component involves providing the agent with a set of rules
+governing how it should approach coding tasks, along with guidance on
+the purpose behind these rules.
+
+- *Purpose of Constraints*: The goal is to help the agent recognize and
+  avoid specific "instincts" or default behaviors in coding that do not
+  align with my process. By explaining the "why" behind each rule, I aim
+  to offer a concise and effective definition of what should be avoided,
+  making it easier for the agent to internalize and apply the
+  constraints.
+- *Dynamic Nature*: The specific constraints I apply are tailored based
+  on:
+  - The current stage of the development process (e.g., early
+    exploration with high autonomy vs. later fortification with high
+    specification).
+  - The nature of the problem being addressed or the solution being
+    explored.
+- *Expected Outcome*: This should result in more targeted, minimalistic
+  responses that support rapid iteration without introducing unsolicited
+  complexity. For example, rules might draw from taxonomies like phases
+  (e.g., Exploring for minimal investment) or directives (e.g., "produce
+  example code for evaluation") to enforce a "throw-away mindset" in
+  early stages.
+
+**** Component 2: Context Management
+:PROPERTIES:
+:CUSTOM_ID: component-2-context-management
+:END:
+This component focuses on maintaining a controlled and efficient context
+for interactions with the agent to prevent pollution and degradation
+over time.
+
+- *Starting Fresh*: Begin each session or step with a clean context to
+  avoid carryover from previous interactions that could lead to
+  irrelevant or degraded responses.
+- *Precise Information Supply*: Provide exactly the right amount and
+  type of information needed for the current task. This includes:
+  - Teaching the agent the specific process methodology to follow for
+    the step at hand (e.g., via self-contained stories that define
+    roles, workflows, and evaluation criteria).
+  - Clearly defining the nature of the expected result, ensuring it
+    aligns with my goals without excess.
+- *Expected Outcome*: This approach minimizes backsliding, reduces the
+  need for frequent session resets, and streamlines the reconstruction
+  of essential context, making interactions more efficient and focused
+  while supporting iterative refinement of the process itself (e.g.,
+  through prototypes like story definitions).
+
+
+***** *Bloat* and *Slop* example
+:PROPERTIES:
+:CUSTOM_ID: bloat-and-slop-example
+:END:
+
+This document was generated with the assistance of Grok. This
+chapter was the result of Grok performing an editor's and copy editor's function
+on text that I provided. The following instruction part of the prompt that
+I issued for the "Problem Statement" portion of this document, not including
+the current "Bloat and Slop" subection which was added later.
+
+#+BEGIN_QUOTE prompt1
+Please help me draft the above description into a clear and well
+formatted document, then I'll explain the next step.
+#+END_QUOTE
+
+This produced high quality results. I then did a similar prompt for
+the "Approach Statement" portion of this chapter.  Again, the simple,
+well formed request with a specific an limited directive got me just
+what I wanted.
+
+Building Chapter 2 was pretty much the same quality, as nearly all of
+the text was either directly copied or slightly edited from an example
+prompt that I had built to test Claude's reaction to it as part of the
+process of developing this process.
+
+The chapter of this document entitled "Pass 3 Inputs" contains
+the three documents that I uploaded to Grok along with the following
+prompt.
+
+#+BEGIN_QUOTE prompt2
+I am attaching an example of a prompt in story format which shows
+where I am in developing this process. I am also uploading a
+background document that I supplied to Claude as adjunct to the
+request. I am also uploading the prompt itself that I used to start an
+analysis of the quality of this particular story. Let me know how that
+affects your understanding, and suggest any worthy edits to the
+approach definition
+#+END_QUOTE
+
+So far, excellent results, no bloat and no slop.
+
+The next prompt is where things started to go off the rails. Here is the relevant portion
+of the prompt
+
+#+BEGIN_QUOTE prompt3
+Can you please combine the earlier problem statement and this approach
+statement into chapter one of a new document we will build, titled
+something like "MOQ for agents". Maybe you can suggest an outline for
+discussing each topic in more detail?
+#+END_QUOTE
+
+The following is the output Grok produced from the request for an outline.
+
+
+#+BEGIN_EXAMPLE
+
+- *Chapter 1: Identifying the Mismatch and Outlining a Path Forward* (as
+  drafted above)
+  - Introduction to MOQ in the context of agentic coding.
+  - Detailed problem statement.
+  - High-level approach overview.
+- *Chapter 2: Deep Dive into My Coding Process*
+  - Elaborate on the DQ/SQ rhythm in personal development cycles.
+  - Break down phases (e.g., rapid iteration, deferred structuring) with
+    emphasis on mental model building.
+  - Discuss how concurrent stages create complexity for agents.
+- *Chapter 3: Analyzing Agent Behaviors and Default Instincts*
+  - Examine common LLM response patterns (e.g., over-generalization to
+    production-ready code).
+  - Map these to MOQ: How agents prioritize SQ prematurely, stifling DQ.
+  - Identify specific "instincts" to constrain, with "why" explanations.
+- *Chapter 4: Developing Constraints in Detail*
+  - Taxonomy of constraints: Phases, story types, directives, and
+    autonomy spectrum.
+  - Guidelines for tailoring constraints dynamically.
+  - Strategies for preventing backsliding through rule reinforcement.
+- *Chapter 5: Mastering Context Management*
+  - Techniques for fresh starts and precise information supply.
+  - Workflows for session resets and context reconstruction.
+  - Integration with tools like stories and tasks to maintain
+    modularity.
+- *Chapter 6: Prototyping Guardrails in Practice*
+  - Using testbeds (e.g., ctrack) for iteration.
+  - Evaluating prototypes: Metrics for success (e.g., reduced
+    frustration, faster cycles).
+  - Refining based on real-world feedback.
+- *Chapter 7: Future Extensions and Generalization*
+  - Scaling Guardrails to other projects or users.
+  - Potential integrations (e.g., with version control or other tools).
+  - Open questions and areas for further development.
+- *Appendices*
+  - Glossary of terms (e.g., MOQ concepts, Guardrails taxonomies).
+  - Example story and task templates (descriptive only, no code).
+
+#+END_EXAMPLE
+
+It starts off well, and looks pretty good through the end of Chapter 5.
+
+Chapters 6 and 7 are trouble, big trouble. I provided some background information showing
+how I have been using Claude Code to try out these ideas and that included
+some discussion of the process I am using for that, which is essentially a
+process to develop the process. This document is supposed to be about the
+process I am designing, not about my meta process of designing and testing the
+process. This is a huge scope creep and it is my fault. I provided information
+that was meant to be background material as a way of helping to explain the
+requested work. I should have known this was a dangerous idea, as an LLM
+will always incorrect view the background material as an implicit request
+to expand the scope of its results to include consideration of the background
+material, without preserving the separation of requested work versus
+material to help explain the request. I do not yet have a proven pattern
+of constraining this behavior through prompt engineering.
+
+At this point I faced the dilema that I explained earlier, how to preserve
+the high quality results but discard the bloat? I decided to complete
+the proposed document and then request that Grok build a new story file
+for the next phase of testing. That way I hoped to see if the completed
+document, which would be in Grok's context, would result in a story
+that would work well in testing.
+
+So I let it iterate through writing the other chapters. Detailed
+review of the success and problems with each chapter in another document.
+
+
+
